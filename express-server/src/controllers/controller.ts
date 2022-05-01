@@ -1,11 +1,9 @@
 import { Repository } from "typeorm";
-import { idText } from "typescript";
 
 export class Controller {
     repository: Repository<any>;
 
     create = async (req, res) => {
-        console.log("in create", req.body);
         const entity = this.repository.create(req.body);
         if(entity.id) {
             entity.id = null;
@@ -42,7 +40,7 @@ export class Controller {
                 return res.status(404).json({message: "Entity with such id is not found!"});
             }
 
-            await this.repository.delete(entity);
+            await this.repository.delete(entity.id);
             res.json({message : `Entity with the id ${id} is deleted!`});
         } catch(err) {
             res.status(500).json({message: err.message});
