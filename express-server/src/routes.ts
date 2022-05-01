@@ -16,20 +16,20 @@ export function getAllRoutes() {
     //PRODUCT
     const productController = new ProductController();
     router.get("/api/product", productController.getAll);
-    //router.post("/api/product", validProductRequestBody, productController.create);
+    router.post("/api/product", validProductRequestBody, productController.create);
     router.delete("/api/product/:id", productController.delete);
 
     //PART
     const partController = new PartController();
     router.get("/api/part", partController.getAll);
-    //router.post("/api/part", validPartRequestBody, partController.create);
+    router.post("/api/part", validPartRequestBody, partController.create);
     router.delete("/api/part/:id", partController.delete);
     router.put("/api/part/:id", partController.increaseAmount);
 
     //ORDER
     const orderController = new OrderController();
     router.get("/api/order", orderController.getAll);
-    //router.post("/api/order", validOrderRequestBody, orderController.makeOrder);
+    router.post("/api/order", validOrderRequestBody, orderController.makeOrder);
 
     return router;
 }

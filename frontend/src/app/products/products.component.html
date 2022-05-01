@@ -2,7 +2,7 @@
   <button mat-button class="nav-button" [routerLink]="['/products/add']">Hozzáad</button>
 </div>
 <div class="container">
-  <h1 class="title">Termékek menü</h1>
+  <h1 class="title">Termékek</h1>
   <div class="list-container" *ngIf="!errorMessage; else error">
     <div class="list" *ngFor="let product of products">
       <h1><strong>{{product.name}}</strong></h1>
@@ -26,8 +26,10 @@
         <hr>
       </div>
       <div *ngFor="let rp of product.requiredProducts">
-        <h2>{{rp.requiredProduct.name}}</h2>
-        <h2>{{rp.amount}}</h2>
+        <div class="space-between">
+          <h2>{{rp.requiredProduct.name}}</h2>
+          <h2>{{rp.amount}} db</h2>
+        </div>
         <hr>
       </div>
       <button mat-raised-button color="warn" class="delete-button" (click)="deleteProduct(product.id)">Törlés</button>

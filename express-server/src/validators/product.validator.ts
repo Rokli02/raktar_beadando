@@ -1,10 +1,10 @@
 export function validProductRequestBody(req, res, next) {
     if(!req.body.name) {
-        return;
+        return res.status(400).json({message: "Invalid name input!"});
     }
 
     if(!req.body.parts || !req.body.requiredProducts) {
-        return;
+        return res.status(400).json({message: "Invalid part input!"});
     }
 
     next();

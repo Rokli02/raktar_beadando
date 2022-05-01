@@ -27,7 +27,17 @@ export class ProductsComponent implements OnInit {
     }
   }
 
-  deleteProduct(id: number) {
-    console.log("DELETE:",id);
+  async deleteProduct(id: number) {
+    try {
+      const returnValue : any = await this.productService.deleteProduct(id);
+      if(returnValue) {
+        this.products = this.products.filter(value => value.id !== id);
+        console.log(returnValue.message);
+        return;
+      }
+    } catch(err) {
+      console.log(err);
+    }
+    alert("A termék törlése nem sikerült!");
   }
 }

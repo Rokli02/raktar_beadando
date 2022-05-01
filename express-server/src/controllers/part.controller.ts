@@ -27,8 +27,8 @@ export class PartController extends Controller {
                 return res.status(400).json({message: `More is needed (${-increase}), than is available ${entity.amount}!`});
             }
 
-            const result = await this.repository.update(entity, {amount : increasedAmount});
-            res.json(result);
+            await this.repository.update(entity, {amount : increasedAmount});
+            res.json({newAmount: increasedAmount});
         } catch(err) {
             res.status(500).json({message: err.message});
         }

@@ -5,6 +5,7 @@ export class Controller {
     repository: Repository<any>;
 
     create = async (req, res) => {
+        console.log("in create", req.body);
         const entity = this.repository.create(req.body);
         if(entity.id) {
             entity.id = null;
@@ -42,7 +43,7 @@ export class Controller {
             }
 
             await this.repository.delete(entity);
-            res.json({message : `Entity with the ${id} id is deleted!`});
+            res.json({message : `Entity with the id ${id} is deleted!`});
         } catch(err) {
             res.status(500).json({message: err.message});
             console.log(err);

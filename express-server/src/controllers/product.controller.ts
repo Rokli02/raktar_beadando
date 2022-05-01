@@ -14,4 +14,6 @@ export class ProductController extends Controller {
             console.log(err);
         }
     };
+
+    //SAJÁT CREATE METÓDUS, ahol külön beilleszti a szükséges alkatrészeket és termékeket!
 }

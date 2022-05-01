@@ -26,7 +26,18 @@ export class PartsComponent implements OnInit {
     }
   }
 
-  deletePart(id: number) {
-    console.log("DELETE:",id);
+  async deletePart(id: number) {
+    try {
+      const returnValue : any= await this.partService.deletePart(id);
+      if(returnValue) {
+        this.parts = this.parts.filter((value) => value.id !== id);
+        alert(returnValue.message);
+        return;
+      }
+
+    } catch(err) {
+      console.log(err);
+    }
+    alert("A törlés nem sikerült!");
   }
 }

@@ -2,7 +2,7 @@
   <button mat-button class="nav-button" [routerLink]="['/orders/add']">Hozzáad</button>
 </div>
 <div class="container">
-  <h1 class="title">Rendelések menü</h1>
+  <h1 class="title">Rendelések</h1>
   <div class="list-container" *ngIf="!errorMessage; else error">
     <div class="list" *ngFor="let order of orders">
       <h1>{{order.customerName}}</h1>
