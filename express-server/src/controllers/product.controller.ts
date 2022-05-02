@@ -62,13 +62,9 @@ export class ProductController extends Controller {
             }
 
             const reqPartResult = await this.reqPartRepository.save(rParts);
-            if(reqPartResult.length < 1) {
-                return res.status(500).json({message: "Can insert required part relation in the database!"});
-            }
-            
             const reqProdResult = await this.reqProdRepository.save(rProds);
-            if(reqProdResult.length < 1) {
-                return res.status(500).json({message: "Can insert required product relation in the database!"});
+            if(reqPartResult.length < 1 && reqProdResult.length < 1) {
+                return res.status(500).json({message: "Can't insert required part or required product relation in the database!"});
             }
 
             res.status(201).json({message: `New product has been inserted with name: ${simpleProduct.name}!`});
