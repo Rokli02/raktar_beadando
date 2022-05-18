@@ -2,6 +2,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Part } from 'src/app/models/Part';
 import { PartService } from 'src/app/services/part.service';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-increase-part-amount',
@@ -11,7 +12,8 @@ import { PartService } from 'src/app/services/part.service';
 export class IncreasePartAmountComponent implements OnInit {
   errorMessage ?: string;
   parts: Part[] = [];
-  constructor(private partService: PartService) { }
+  constructor(private partService: PartService,
+              private userService: UserService) { }
 
   async ngOnInit() {
     try {
@@ -21,8 +23,9 @@ export class IncreasePartAmountComponent implements OnInit {
         this.errorMessage = "Nincsenek alkatrészek az adatbázisban!"
       }
     } catch(err) {
+      this.userService.handleUserError(err);
       console.log(err);
-      this.errorMessage = (err as HttpErrorResponse).error;
+      this.errorMessage = "Nem sikerült betölteni az alkatrészeket!";
     }
   }
 
@@ -46,6 +49,7 @@ export class IncreasePartAmountComponent implements OnInit {
         return;
       }
     } catch(err) {
+      this.userService.handleUserError(err);
       console.log(err);
     }
     alert("Nem sikerült a mennyiséget megváltoztatni!");

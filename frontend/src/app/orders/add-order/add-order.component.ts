@@ -5,6 +5,7 @@ import { Order } from 'src/app/models/Order';
 import { Product } from 'src/app/models/Product';
 import { OrderService } from 'src/app/services/order.service';
 import { ProductService } from 'src/app/services/product.service';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-add-order',
@@ -17,7 +18,8 @@ export class AddOrderComponent implements OnInit {
 
   constructor(private orderService : OrderService,
               private productService : ProductService,
-              private pb : FormBuilder) { }
+              private pb : FormBuilder,
+              private userService: UserService) { }
 
   async ngOnInit() {
     this.orderForm = this.pb.group({
@@ -32,6 +34,7 @@ export class AddOrderComponent implements OnInit {
     try {
       this.products = await this.productService.getProducts();
     } catch(err) {
+      this.userService.handleUserError(err);
       console.log(err);
     }
   }
@@ -58,6 +61,7 @@ export class AddOrderComponent implements OnInit {
         });
       }
     } catch(err : any) {
+      this.userService.handleUserError(err);
       console.log(err);
       alert(err.error.message);
     }

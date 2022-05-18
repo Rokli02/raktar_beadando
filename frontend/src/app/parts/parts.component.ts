@@ -2,6 +2,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Part } from '../models/Part';
 import { PartService } from '../services/part.service';
+import { UserService } from '../services/user.service';
 
 @Component({
   selector: 'app-parts',
@@ -11,7 +12,8 @@ import { PartService } from '../services/part.service';
 export class PartsComponent implements OnInit {
   parts: Part[] = []
   errorMessage ?: string = undefined;
-  constructor(private partService: PartService) { }
+  constructor(private partService: PartService,
+              private userService: UserService) { }
 
   async ngOnInit() {
     try {
@@ -21,8 +23,9 @@ export class PartsComponent implements OnInit {
         this.errorMessage = "Nincsenek alkatrészek az adatbázisban!"
       }
     } catch(err) {
+      this.userService.handleUserError(err);
       console.log(err);
-      this.errorMessage = (err as HttpErrorResponse).error;
+      this.errorMessage = "Nem sikerült betölteni az alkatrészeket!";
     }
   }
 
@@ -36,6 +39,7 @@ export class PartsComponent implements OnInit {
       }
 
     } catch(err) {
+      this.userService.handleUserError(err);
       console.log(err);
     }
     alert("A törlés nem sikerült!");

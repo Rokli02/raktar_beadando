@@ -2,6 +2,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Order } from '../models/Order';
 import { OrderService } from '../services/order.service';
+import { UserService } from '../services/user.service';
 
 @Component({
   selector: 'app-orders',
@@ -11,7 +12,8 @@ import { OrderService } from '../services/order.service';
 export class OrdersComponent implements OnInit {
   orders: Order[] = [];
   errorMessage ?: string;
-  constructor(private orderService: OrderService) { }
+  constructor(private orderService: OrderService,
+              private userService: UserService) { }
 
   async ngOnInit() {
     try {
@@ -21,8 +23,9 @@ export class OrdersComponent implements OnInit {
         this.errorMessage = "Nincsenek rendelések az adatbázisban!"
       }
     } catch(err) {
+      this.userService.handleUserError(err);
       console.log(err)
-      this.errorMessage = (err as HttpErrorResponse).error;
+      this.errorMessage = "Nem sikerült betölteni a rendeléseket!";
     }
   }
 }

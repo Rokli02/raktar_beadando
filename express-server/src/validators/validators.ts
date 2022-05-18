@@ -21,3 +21,8 @@ export function validPhoneNumber(number: string) {
         return true;
     return false;
 }
+
+export const config = {
+    secret: "VeRyHarDsEcRat123987",
+    expiration: "5 minutes"
+};

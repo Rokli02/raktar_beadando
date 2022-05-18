@@ -2,6 +2,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Product } from '../models/Product';
 import { ProductService } from '../services/product.service';
+import { UserService } from '../services/user.service';
 
 @Component({
   selector: 'app-products',
@@ -11,7 +12,8 @@ import { ProductService } from '../services/product.service';
 export class ProductsComponent implements OnInit {
   products : Product[] = [];
   errorMessage ?: string;
-  constructor(private productService: ProductService) { }
+  constructor(private productService: ProductService,
+              private userService: UserService) { }
 
   async ngOnInit() {
     try {
@@ -19,11 +21,12 @@ export class ProductsComponent implements OnInit {
       console.log(this.products);
 
       if(this.products.length === 0) {
-        this.errorMessage = "Nincsenek alkatrészek az adatbázisban!"
+        this.errorMessage = "Nincsenek termékek az adatbázisban!"
       }
     } catch(err) {
+      this.userService.handleUserError(err);
       console.log(err);
-      this.errorMessage = (err as HttpErrorResponse).error;
+      this.errorMessage = "Nem sikerült betölteni a termékeket!";
     }
   }
 
@@ -36,6 +39,7 @@ export class ProductsComponent implements OnInit {
         return;
       }
     } catch(err) {
+      this.userService.handleUserError(err);
       console.log(err);
     }
     alert("A termék törlése nem sikerült!");

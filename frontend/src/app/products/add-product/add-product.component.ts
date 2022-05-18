@@ -4,6 +4,7 @@ import { Part } from 'src/app/models/Part';
 import { Product, ProductParts, ProductProducts } from 'src/app/models/Product';
 import { PartService } from 'src/app/services/part.service';
 import { ProductService } from 'src/app/services/product.service';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-add-product',
@@ -19,7 +20,8 @@ export class AddProductComponent implements OnInit {
 
   constructor(private fb: FormBuilder,
               private productService: ProductService,
-              private partService: PartService) { }
+              private partService: PartService,
+              private userService: UserService) { }
 
   async ngOnInit() {
     this.productForm = this.fb.group({
@@ -124,11 +126,14 @@ export class AddProductComponent implements OnInit {
         this.addedParts = [];
         this.addedProds = [];
 
+        this.products.push(insertedProd);
+
         alert("Sikeres termék felvitel történt!");
 
         return;
       }
     } catch(err) {
+      this.userService.handleUserError(err);
       console.log(err);
     }
     alert("Új termék felvétele sikertelen!");
